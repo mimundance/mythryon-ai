@@ -18,10 +18,52 @@ button{width:100%;padding:15px;margin:10px 0;background:#c9a34a;border:1px solid
 <h1>MYTHRYON</h1>
 <p>AI CHARACTER IDENTITY STUDIO</p>
 <p>Da vida a tus personajes. Crea mundos. Construye historias.</p>
-<button onclick="alert('Registro próximamente')">CREAR CUENTA</button>
+<button onclick="document.getElementById('registro').style.display='block'" style="background:#c9a34a;color:#080808;padding:13px 25px;border:0;border-radius:8px;">Crear cuenta</button>
+
+<div id="registro" style="display:none;margin-top:20px;">
+<h3>Crear cuenta MYTHRYON</h3>
+<form id="formRegistro">
+<input id="email" type="email" placeholder="Tu correo electrónico" required style="padding:12px;width:85%;margin:8px;">
+<input id="password" type="password" placeholder="Contraseña (mínimo 8 caracteres)" minlength="8" required style="padding:12px;width:85%;margin:8px;">
+<button type="submit">Registrarme</button>
+<p id="mensajeRegistro"></p>
+</form>
+</div>
 <button class="secondary" onclick="alert('Inicio de sesión próximamente')">INICIAR SESIÓN</button>
 <p>MYTHRYON AI © 2026</p>
 </main>
+  <script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+const supabase = createClient(
+  'TU_SUPABASE_URL',
+  'TU_CLAVE_PUBLICA'
+);
+
+document.getElementById('formRegistro').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+  const mensaje = document.getElementById('mensajeRegistro');
+
+  mensaje.textContent = 'Creando tu cuenta...';
+
+  const { error } = await supabase.auth.signUp({
+    email: email,
+    password: password,
+    options: {
+      emailRedirectTo: window.location.origin + window.location.pathname
+    }
+  });
+
+  if (error) {
+    mensaje.textContent = 'Error: ' + error.message;
+  } else {
+    mensaje.textContent = '¡Cuenta creada! Revisa tu correo para verificarla.';
+  }
+});
+</script>
 </body>
   <section style="background:#080808;color:#f5d58a;padding:25px;text-align:center;border:2px solid #c9a34a;border-radius:15px;margin:15px 0;font-family:Arial;">
   <h1 style="font-size:32px;letter-spacing:4px;">MYTHRYON AI</h1>
