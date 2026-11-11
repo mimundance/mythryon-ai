@@ -121,7 +121,33 @@ color: #fff;
 <p>MYTHRYON AI © 2026</p>
 
 </main>
+  
+<section id="pantallaNuevaPassword" style="display:none;">
+  <h2>Restablecer contraseña</h2>
+  <p>Escribe tu nueva contraseña para MYTHRYON.</p>
 
+  <form id="formNuevaPassword">
+    <input
+      id="nuevaPassword"
+      type="password"
+      placeholder="Nueva contraseña"
+      minlength="8"
+      required
+    >
+
+    <input
+      id="confirmarPassword"
+      type="password"
+      placeholder="Confirmar contraseña"
+      minlength="8"
+      required
+    >
+
+    <button type="submit">Guardar nueva contraseña</button>
+    <p id="mensajeNuevaPassword"></p>
+  </form>
+</section>
+  
 <script>
 import { createClient } from
 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
