@@ -216,6 +216,40 @@ recuperar.addEventListener('click', async () => {
     redirectTo: 'https://mimundance.github.io/mythryon-ai/'
   });
 
+  const pantallaNueva = document.getElementById('pantallaNuevaPassword');
+
+supabase.auth.onAuthStateChange((event, session) => {
+  if (event === 'PASSWORD_RECOVERY' && session) {
+    pantallaNueva.style.display = 'block';
+  }
+});
+
+document.getElementById('formNuevaPassword')
+.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const password = document.getElementById('nuevaPassword').value;
+  const confirmar = document.getElementById('confirmarPassword').value;
+  const mensaje = document.getElementById('mensajeNuevaPassword');
+
+  if (password !== confirmar) {
+    mensaje.textContent = 'Las contraseñas no coinciden.';
+    return;
+  }
+
+  mensaje.textContent = 'Actualizando contraseña...';
+
+  const { error } = await supabase.auth.updateUser({
+    password: password
+  });
+
+  if (error) {
+    mensaje.textContent = 'Error: ' + error.message;
+  } else {
+    mensaje.textContent = '¡Contraseña actualizada correctamente!';
+  }
+});
+
   if (error) {
     mensaje.textContent = 'Error: ' + error.message;
   } else {
