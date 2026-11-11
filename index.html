@@ -63,7 +63,6 @@ formulario.addEventListener('submit', async (e) => {
 <p id="mensajeRegistro"></p>
 </form>
 </div>
-<button class="secondary" onclick="alert('Inicio de sesión próximamente')">INICIAR SESIÓN</button>
 <p>MYTHRYON AI © 2026</p>
 </main>
   <script type="module">
@@ -95,6 +94,30 @@ document.getElementById('formRegistro').addEventListener('submit', async (e) => 
     mensaje.textContent = 'Error: ' + error.message;
   } else {
     mensaje.textContent = '¡Cuenta creada! Revisa tu correo para verificarla.';
+  }
+});
+   const formularioLogin = document.getElementById('formLogin');
+
+formularioLogin.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  const mensaje = document.getElementById('mensajeLogin');
+
+  mensaje.textContent = 'Iniciando sesión...';
+
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email: email,
+    password: password
+  });
+
+  if (error) {
+    mensaje.textContent = 'Error: ' + error.message;
+  } else {
+    mensaje.textContent = '¡Bienvenido a MYTHRYON AI!';
+    document.getElementById('login').style.display = 'none';
+    alert('¡Inicio de sesión exitoso!');
   }
 });
 </script>
