@@ -4,123 +4,203 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MYTHRYON AI</title>
+
 <style>
-body{background:#080808;color:#e3bd66;font-family:Arial;text-align:center;padding:50px 15px}
-main{max-width:450px;margin:auto;border:2px solid #c9a34a;border-radius:18px;padding:30px}
-h1{letter-spacing:5px;font-size:34px}
-p{color:#f5e5bd;line-height:1.6}
-button{width:100%;padding:15px;margin:10px 0;background:#c9a34a;border:1px solid #e3bd66;border-radius:8px;font-size:17px;cursor:pointer}
-.secondary{background:transparent;color:#e3bd66}
+* { box-sizing: border-box; }
+
+body {
+background: #080808;
+color: #f5d58a;
+font-family: Arial, sans-serif;
+text-align: center;
+padding: 20px;
+margin: 0;
+}
+
+main {
+max-width: 600px;
+margin: 20px auto;
+}
+
+.panel {
+border: 2px solid #c9a34a;
+border-radius: 16px;
+padding: 24px;
+margin: 18px 0;
+background: #111;
+}
+
+h1 { font-size: 36px; letter-spacing: 5px; }
+h2, h3 { color: #e3bd66; }
+p { color: #fff; line-height: 1.6; }
+
+input {
+display: block;
+width: 100%;
+padding: 14px;
+margin: 12px 0;
+border-radius: 8px;
+border: 1px solid #c9a34a;
+font-size: 16px;
+}
+
+button {
+width: 100%;
+padding: 14px;
+margin: 8px 0;
+border-radius: 8px;
+border: 1px solid #e3bd66;
+background: #c9a34a;
+color: #080808;
+font-size: 17px;
+font-weight: bold;
+cursor: pointer;
+}
+
+.secondary {
+background: #171717;
+color: #f5d58a;
+}
+
+.hidden { display: none; }
+
+#mensajeRegistro, #mensajeLogin, #mensajeSesion {
+overflow-wrap: anywhere;
+color: #fff;
+}
 </style>
 </head>
- <script type="module">
-import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
-const supabase = createClient(
-  'https://dwbomqnzbjrlsdrwphmv.supabase.co',
-  'sb_publishable_Y5-_zjuWwlAcY2kSjtsPSw_Z-y_RMCu'
-);
-
-const formulario = document.getElementById('formRegistro');
-
-formulario.addEventListener('submit', async (e) => {
-  e.preventDefault();
-
-  const email = document.getElementById('email').value.trim();
-  const password = document.getElementById('password').value;
-  const mensaje = document.getElementById('mensajeRegistro');
-
-  mensaje.textContent = 'Creando tu cuenta...';
-
-  const { error } = await supabase.auth.signUp({
-    email,
-    password,
-    options: {
-      emailRedirectTo: 'https://mimundance.github.io/mythryon-ai/'
-    }
-  });
-
-  if (error) {
-    mensaje.textContent = 'Error: ' + error.message;
-  } else {
-    mensaje.textContent = '¡Registro realizado! Revisa tu correo para verificar tu cuenta.';
-  }
-});
-</script> 
 <body>
 <main>
+
+<section class="panel">
 <h1>MYTHRYON</h1>
 <p>AI CHARACTER IDENTITY STUDIO</p>
+<p>Create Beyond Imagination</p>
 <p>Da vida a tus personajes. Crea mundos. Construye historias.</p>
-<button onclick="document.getElementById('registro').style.display='block'" style="background:#c9a34a;color:#080808;padding:13px 25px;border:0;border-radius:8px;">Crear cuenta</button>
+</section>
 
-<div id="registro" style="display:none;margin-top:20px;">
-<h3>Crear cuenta MYTHRYON</h3>
+<section class="panel" id="acceso">
+<h2>Bienvenido a MYTHRYON</h2>
+
+<h3>Crear cuenta</h3>
 <form id="formRegistro">
-<input id="email" type="email" placeholder="Tu correo electrónico" required style="padding:12px;width:85%;margin:8px;">
-<input id="password" type="password" placeholder="Contraseña (mínimo 8 caracteres)" minlength="8" required style="padding:12px;width:85%;margin:8px;">
+<input id="email" type="email" placeholder="Correo electrónico" required>
+<input id="password" type="password" placeholder="Contraseña (mínimo 8 caracteres)" minlength="8" required>
 <button type="submit">Registrarme</button>
 <p id="mensajeRegistro"></p>
 </form>
-</div>
+
+<hr>
+
+<h3>Iniciar sesión</h3>
+<form id="formLogin">
+<input id="loginEmail" type="email" placeholder="Correo electrónico" required>
+<input id="loginPassword" type="password" placeholder="Contraseña" required>
+<button type="submit">Entrar</button>
+<p id="mensajeLogin"></p>
+</form>
+</section>
+
+<section class="panel hidden" id="espacioPrivado">
+<h2>Mi espacio MYTHRYON</h2>
+<p id="mensajeSesion"></p>
+<h3>EXPLORA TU UNIVERSO</h3>
+<p>✨ Character Identity Studio</p>
+<p>🎬 Creación de videos</p>
+<p>🖼️ Creación de imágenes</p>
+<p>🎵 Música y voces IA</p>
+<p>📁 Mis proyectos</p>
+<button class="secondary" id="cerrarSesion">Cerrar sesión</button>
+</section>
+
 <p>MYTHRYON AI © 2026</p>
+
 </main>
+
+<script type="module">
+import { createClient } from
+'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+const supabase = createClient(
+'https://dwbomqnzbjrlsdrwphmv.supabase.co',
+'sb_publishable_Y5-_zjuWwlAcY2kSjtsPSw_Z-y_RMCu'
 );
 
-<document.getElementById('formRegistro').addEventListener('submit', async (e) => {
-  e.preventDefault();
+const registro = document.getElementById('formRegistro');
+const login = document.getElementById('formLogin');
 
-  <const email = document.getElementById('email').value;
-  <const password = document.getElementById('password').value;
-  <const mensaje = document.getElementById('mensajeRegistro');
+registro.addEventListener('submit', async (e) => {
+e.preventDefault();
 
-  <mensaje.textContent = 'Creando tu cuenta...';
+const email = document.getElementById('email').value.trim();
+const password = document.getElementById('password').value;
+const mensaje = document.getElementById('mensajeRegistro');
 
-  <const { error } = await supabase.auth.signUp({
-    email: email,
-    password: password,
-    options: {
-     emailRedirectTo: window.location.origin + window.location.pathname
-    }
-  });
+mensaje.textContent = 'Creando tu cuenta...';
 
-  if (error) {
-    mensaje.textContent = 'Error: ' + error.message;
-  } else {
-    mensaje.textContent = '¡Cuenta creada! Revisa tu correo para verificarla.';
-  }
+const { error } = await supabase.auth.signUp({
+email,
+password,
+options: {
+emailRedirectTo: 'https://mimundance.github.io/mythryon-ai/'
+}
 });
-   const formularioLogin = document.getElementById('formLogin');
-formularioLogin.addEventListener('submit', async (e) => {
-  e.preventDefault();
 
-  <const email = document.getElementById('loginEmail').value.trim();
-  <const password = document.getElementById('loginPassword').value;
-  <const mensaje = document.getElementById('mensajeLogin');
-
-  <mensaje.textContent = 'Iniciando sesión...';
-
-  <const { data, error } = await supabase.auth.signInWithPassword({
-    email: email,
-    password: password
-  });
-
-  if (error) {
-    mensaje.textContent = 'Error: ' + error.message;
-  } else {
-    mensaje.textContent = '¡Bienvenido a MYTHRYON AI!';
-    document.getElementById('login').style.display = 'none';
-    alert('¡Inicio de sesión exitoso!');
-  }
+if (error) {
+mensaje.textContent = 'Error: ' + error.message;
+} else {
+mensaje.textContent =
+'¡Cuenta creada! Revisa tu correo para verificarla.';
+}
 });
+
+login.addEventListener('submit', async (e) => {
+e.preventDefault();
+
+const email = document.getElementById('loginEmail').value.trim();
+const password = document.getElementById('loginPassword').value;
+const mensaje = document.getElementById('mensajeLogin');
+
+mensaje.textContent = 'Iniciando sesión...';
+
+const { error } = await supabase.auth.signInWithPassword({
+email,
+password
+});
+
+if (error) {
+mensaje.textContent = 'Error: ' + error.message;
+} else {
+mensaje.textContent = '';
+mostrarEspacioPrivado();
+}
+});
+
+async function mostrarEspacioPrivado() {
+const { data } = await supabase.auth.getUser();
+
+if (data.user) {
+document.getElementById('acceso').classList.add('hidden');
+document.getElementById('espacioPrivado').classList.remove('hidden');
+document.getElementById('mensajeSesion').textContent =
+'Sesión iniciada: ' + data.user.email;
+}
+}
+
+document.getElementById('cerrarSesion').addEventListener('click', async () => {
+await supabase.auth.signOut();
+document.getElementById('espacioPrivado').classList.add('hidden');
+document.getElementById('acceso').classList.remove('hidden');
+});
+
+const { data: { session } } = await supabase.auth.getSession();
+
+if (session) {
+mostrarEspacioPrivado();
+}
 </script>
- <h2>Bienvenido a MYTHRYON</h2>
-  <p>Tu universo de creación con inteligencia artificial.</p>
-  <h3>EXPLORA TU UNIVERSO</h3>
-  <p>✨ Character Identity Studio</p>
-  <p>🎬 Creación de videos</p>
-  <p>🖼️ Creación de imágenes</p>
-  <p>🎵 Música y voces IA</p>
-  <p>📁 Mis proyectos</p>
+
 </body>
 </html>
