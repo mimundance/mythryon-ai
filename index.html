@@ -13,6 +13,40 @@ button{width:100%;padding:15px;margin:10px 0;background:#c9a34a;border:1px solid
 .secondary{background:transparent;color:#e3bd66}
 </style>
 </head>
+ <script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+const supabase = createClient(
+  'https://dwbomqnzbjrlsdrwphmv.supabase.co',
+  'sb_publishable_Y5-_zjuWwlAcY2kSjtsPSw_Z-y_RMCu'
+);
+
+const formulario = document.getElementById('formRegistro');
+
+formulario.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+  const mensaje = document.getElementById('mensajeRegistro');
+
+  mensaje.textContent = 'Creando tu cuenta...';
+
+  const { error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      emailRedirectTo: 'https://mimundance.github.io/mythryon-ai/'
+    }
+  });
+
+  if (error) {
+    mensaje.textContent = 'Error: ' + error.message;
+  } else {
+    mensaje.textContent = '¡Registro realizado! Revisa tu correo para verificar tu cuenta.';
+  }
+});
+</script> 
 <body>
 <main>
 <h1>MYTHRYON</h1>
