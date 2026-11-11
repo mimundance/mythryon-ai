@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0907">
+  <title>MYTHRYON — Forja tu leyenda</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --ink: #0b0907;
+      --panel: #15110c;
+      --gold: #d6b36a;
+      --gold-light: #f1d996;
+      --cream: #eadfc4;
+      --muted: #b7aa8f;
+      --line: rgba(214, 179, 106, .34);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      color: var(--cream);
+      background:
+        radial-gradient(ellipse at 76% 20%, rgba(119, 80, 26, .17), transparent 35%),
+        var(--ink);
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    a { color: inherit; }
+
+    .site-shell {
+      min-height: 100vh;
+      overflow: hidden;
+      position: relative;
+      background-image: repeating-linear-gradient(135deg, transparent 0 27px, rgba(214, 179, 106, .025) 28px, transparent 29px 54px);
+    }
+
+    .site-header {
+      min-height: 82px;
+      padding: 15px clamp(20px, 5.4vw, 82px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 22px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(9, 8, 6, .92);
+      position: relative;
+      z-index: 5;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      color: var(--gold-light);
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      font-size: 21px;
+      box-shadow: inset 0 0 0 4px rgba(214, 179, 106, .07);
+    }
+
+    .brand-name {
+      display: block;
+      color: var(--gold-light);
+      font-size: 17px;
+      letter-spacing: .24em;
+    }
+
+    .brand-sub {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font: 9px Arial, sans-serif;
+      letter-spacing: .2em;
+    }
+
+    .main-nav {
+      display: flex;
+      align-items: center;
+      gap: clamp(14px, 3vw, 38px);
+      font: 11px Arial, sans-serif;
+      letter-spacing: .15em;
+    }
+
+    .main-nav a {
+      color: #d6c9aa;
+      text-decoration: none;
+    }
+
+    .main-nav a:hover { color: var(--gold-light); }
+
+    .main-nav .nav-cta {
+      padding: 11px 17px;
+      border: 1px solid var(--gold);
+      color: var(--gold-light);
+    }
+
+    .hero {
+      position: relative;
+      min-height: 590px;
+      padding: 64px clamp(24px, 8vw, 120px) 90px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(340px, .95fr);
+      align-items: center;
+      gap: clamp(28px, 5vw, 72px);
+    }
+
+    .hero-copy { position: relative; z-index: 2; max-width: 590px; }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      color: var(--gold);
+      font: 10px Arial, sans-serif;
+      letter-spacing: .27em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 34px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    h1 {
+      margin: 22px 0 17px;
+      color: #f4e8cb;
+      font-size: clamp(46px, 6.5vw, 82px);
+      font-weight: 400;
+      line-height: .98;
+      letter-spacing: -.04em;
+    }
+
+    h1 em { color: var(--gold); font-weight: 400; }
+
+    .hero-copy > p {
+      max-width: 490px;
+      margin: 0;
+      color: #c6baa1;
+      font: 15px/1.85 Arial, sans-serif;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 29px;
+    }
+
+    .button-gold {
+      min-height: 48px;
+      padding: 0 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #e7cb82;
+      background: linear-gradient(135deg, #e3c77d, #a27a35);
+      color: #171109;
+      font: 700 11px Arial, sans-serif;
+      letter-spacing: .13em;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .button-gold:hover { filter: brightness(1.12); }
+
+    .text-link {
+      color: #ddcfb0;
+      font: 11px Arial, sans-serif;
+      letter-spacing: .1em;
+      text-decoration: none;
+    }
+
+    .hero-image-wrap {
+      min-height: 390px;
+      position: relative;
+      display: grid;
+      place-items: center;
+      isolation: isolate;
+    }
+
+    .hero-image-wrap::before {
+      content: "";
+      position: absolute;
+      width: 77%;
+      aspect-ratio: 1;
+      border: 1px solid rgba(229, 195, 119, .68);
+      border-radius: 50%;
+      box-shadow: 0 0 0 13px rgba(214, 179, 106, .035), 0 0 68px rgba(186, 135, 48, .19), inset 0 0 48px rgba(198, 152, 71, .1);
+      z-index: -1;
+    }
+
+    .hero-image-wrap::after {
+      content: "";
+      position: absolute;
+      inset: 6%;
+      border: 1px dashed rgba(229, 195, 119, .3);
+      border-radius: 50%;
+      z-index: -1;
+    }
+
+    .hero-image {
+      width: 100%;
+      height: 430px;
+      display: block;
+      object-fit: cover;
+      object-position: 58% center;
+      border: 1px solid rgba(223, 188, 108, .58);
+      border-radius: 48% 48% 42% 42% / 45% 45% 35% 35%;
+      box-shadow: 0 22px 60px rgba(0, 0, 0, .68), 0 0 35px rgba(177, 126, 42, .16);
+      mask-image: linear-gradient(to bottom, #000 0%, #000 76%, transparent 100%);
+    }
+
+    .hero-caption {
+      position: absolute;
+      right: -9px;
+      top: 50%;
+      writing-mode: vertical-rl;
+      color: rgba(239, 213, 150, .8);
+      font-size: 9px;
+      letter-spacing: .27em;
+      transform: translateY(-50%);
+    }
+
+    .greek-rule {
+      height: 18px;
+      opacity: .48;
+      background: repeating-linear-gradient(90deg, transparent 0 8px, var(--gold) 8px 10px, transparent 10px 18px);
+      mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+    }
+
+    .auth-section {
+      position: relative;
+      padding: 62px clamp(22px, 8vw, 120px) 118px;
+      display: grid;
+      grid-template-columns: minmax(0, .8fr) minmax(310px, 1fr);
+      align-items: start;
+      gap: clamp(32px, 7vw, 100px);
+      background: linear-gradient(180deg, rgba(13, 11, 8, .92), #0a0907);
+      border-top: 1px solid var(--line);
+    }
+
+    .auth-intro { max-width: 440px; }
+    .auth-intro h2 { margin: 16px 0 12px; color: #f0e2c1; font-size: clamp(30px, 4vw, 45px); font-weight: 400; }
+    .auth-intro p { color: #bdb19a; font: 14px/1.8 Arial, sans-serif; }
+    .auth-note { display: flex; align-items: center; gap: 12px; margin-top: 25px; color: var(--gold); font: 10px Arial, sans-serif; letter-spacing: .13em; }
+    .auth-note::before { content: "✦"; font-size: 15px; }
+
+    .auth-panel {
+      width: 100%;
+      max-width: 520px;
+      justify-self: end;
+      padding: clamp(22px, 4vw, 38px);
+      border: 1px solid var(--line);
+      background: linear-gradient(145deg, rgba(30, 24, 16, .95), rgba(15, 13, 10, .98));
+      box-shadow: 0 18px 60px rgba(0, 0, 0, .36);
+    }
+
+    .auth-panel h2, .auth-panel h3 { color: var(--gold-light); font-weight: 400; }
+    .auth-panel h2 { margin: 0 0 22px; font-size: 26px; }
+    .auth-panel h3 { margin: 20px 0 12px; font-size: 18px; }
+    .auth-panel p { color: #d7cbb2; font: 13px/1.6 Arial, sans-serif; }
+
+    input {
+      width: 100%;
+      min-height: 48px;
+      margin: 8px 0;
+      padding: 13px 14px;
+      color: #f6eddb;
+      background: #0d0b08;
+      border: 1px solid rgba(214, 179, 106, .42);
+      border-radius: 2px;
+      font: 16px Arial, sans-serif;
+    }
+
+    input:focus { outline: 2px solid rgba(214, 179, 106, .55); outline-offset: 1px; }
+    form button { width: 100%; margin-top: 10px; }
+    .button-dark { background: transparent; color: var(--gold-light); border: 1px solid rgba(214, 179, 106, .6); }
+    .button-dark:hover { background: rgba(214, 179, 106, .1); }
+    .hidden { display: none !important; }
+    #mensajeRegistro, #mensajeLogin, #mensajeSesion, #mensajeNuevaPassword { min-height: 18px; overflow-wrap: anywhere; }
+    .auth-panel hr { margin: 24px 0; border: 0; border-top: 1px solid rgba(214, 179, 106, .22); }
+
+    .private-content { text-align: center; }
+    .private-content h2 { margin-bottom: 10px; }
+    .feature-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 20px 0; }
+    .feature-item { padding: 13px 8px; border: 1px solid rgba(214, 179, 106, .2); color: #e2d5bb; font: 12px Arial, sans-serif; }
+
+    .site-footer {
+      min-height: 58px;
+      padding: 12px 24px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      border-top: 1px solid var(--line);
+      color: #ae9e7c;
+      font: 9px Arial, sans-serif;
+      letter-spacing: .2em;
+    }
+    .site-footer span:nth-child(even) { color: var(--gold); }
+
+    .walker-track {
+      position: absolute;
+      z-index: 4;
+      left: 0;
+      right: 0;
+      bottom: 38px;
+      height: 84px;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .walker {
+      position: absolute;
+      bottom: 0;
+      left: -60px;
+      width: 48px;
+      height: 76px;
+      animation: walk-across 24s linear infinite;
+    }
+
+    .walker-head {
+      position: absolute;
+      z-index: 2;
+      left: 16px;
+      bottom: 41px;
+      width: 18px;
+      height: 19px;
+      border-radius: 48%;
+      background: #c9a36a;
+    }
+
+    .walker-helmet {
+      position: absolute;
+      z-index: 3;
+      left: 13px;
+      bottom: 55px;
+      width: 25px;
+      height: 12px;
+      border-radius: 14px 14px 3px 3px;
+      background: linear-gradient(90deg, #98702f, #f0d47e, #a47b34);
+      border-bottom: 2px solid #6f4a1c;
+    }
+
+    .walker-helmet::after {
+      content: "";
+      position: absolute;
+      left: 10px;
+      top: -12px;
+      width: 5px;
+      height: 14px;
+      background: #8f3024;
+      border-radius: 100% 0;
+      transform: rotate(12deg);
+    }
+
+    .walker-tunic {
+      position: absolute;
+      left: 10px;
+      bottom: 7px;
+      width: 30px;
+      height: 38px;
+      background: linear-gradient(90deg, #705122, #e4c36e, #98702e);
+      clip-path: polygon(20% 0, 80% 0, 100% 100%, 0 100%);
+      transform-origin: 50% 8%;
+      animation: body-bob .45s ease-in-out infinite alternate;
+    }
+
+    .walker-shield {
+      position: absolute;
+      z-index: 3;
+      bottom: 9px;
+      left: 0;
+      width: 16px;
+      height: 24px;
+      border: 2px solid #e6c875;
+      border-radius: 45%;
+      background: radial-gradient(circle, #e4c36e 0 2px, #8e3022 3px 7px, #bd974e 8px);
+    }
+
+    .walker-leg {
+      position: absolute;
+      bottom: 0;
+      width: 5px;
+      height: 15px;
+      background: #b08a4c;
+      transform-origin: top;
+    }
+    .walker-leg.left { left: 17px; animation: leg-step .45s ease-in-out infinite alternate; }
+    .walker-leg.right { left: 29px; animation: leg-step .45s ease-in-out infinite alternate-reverse; }
+
+    @keyframes walk-across { from { transform: translateX(0); } to { transform: translateX(calc(100vw + 120px)); } }
+    @keyframes body-bob { from { transform: rotate(-3deg) translateY(0); } to { transform: rotate(3deg) translateY(-3px); } }
+    @keyframes leg-step { from { transform: rotate(-24deg); } to { transform: rotate(24deg); } }
+
+    @media (max-width: 760px) {
+      .site-header { align-items: flex-start; flex-direction: column; gap: 15px; padding: 17px 20px; }
+      .main-nav { width: 100%; justify-content: space-between; gap: 8px; font-size: 9px; }
+      .main-nav .nav-cta { padding: 9px 10px; }
+      .hero { min-height: auto; padding: 46px 24px 60px; grid-template-columns: 1fr; gap: 10px; }
+      .hero-image-wrap { min-height: 300px; margin-top: 5px; }
+      .hero-image { width: min(100%, 440px); height: 330px; }
+      .hero-caption { right: 4px; }
+      .auth-section { grid-template-columns: 1fr; padding: 44px 22px 110px; gap: 22px; }
+      .auth-panel { justify-self: stretch; max-width: none; }
+    }
+
+    @media (max-width: 420px) {
+      .main-nav { letter-spacing: .07em; }
+      .main-nav a:nth-child(2), .main-nav a:nth-child(3) { display: none; }
+      .hero-actions { align-items: flex-start; flex-direction: column; }
+      .hero-image-wrap { min-height: 250px; }
+      .hero-image { height: 280px; }
+      .feature-list { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .walker, .walker-tunic, .walker-leg { animation: none; }
+      .walker { left: 12%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="site-shell">
+    <header class="site-header">
+      <a class="brand" href="#inicio" aria-label="MYTHRYON, inicio">
+        <span class="brand-mark" aria-hidden="true">Μ</span>
+        <span>
+          <span class="brand-name">MYTHRYON</span>
+          <span class="brand-sub">CHARACTER IDENTITY STUDIO</span>
+        </span>
+      </a>
+      <nav class="main-nav" aria-label="Navegación principal">
+        <a href="#universo">EL UNIVERSO</a>
+        <a href="#acceso">CREA TU MITO</a>
+        <a href="#mitologia">MITOLOGÍA</a>
+        <a class="nav-cta" href="#acceso">INGRESAR</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" id="inicio">
+        <div class="hero-copy" id="universo">
+          <div class="eyebrow">Un estudio nacido de los mitos</div>
+          <h1>Los mitos<br>vuelven a <em>vivir.</em></h1>
+          <p>Da forma a héroes, dioses y mundos. Tu imaginación es la nueva fuerza que mueve la antigua Grecia.</p>
+          <div class="hero-actions">
+            <a class="button-gold" href="#acceso">ENTRAR AL ESTUDIO&nbsp; ↗</a>
+            <a class="text-link" href="#mitologia">Descubre Mythryon</a>
+          </div>
+        </div>
+
+        <div class="hero-image-wrap" id="mitologia">
+          <img
+            class="hero-image"
+            src="https://dnznrvs05pmza.cloudfront.net/gemini/gemini-3-pro-image/images/d3257f35-2905-4852-8fa4-89abd924d496/d4e43e13-d313-4778-ab73-96da83dfb97d/Use_case__ui_mockup__Asset_type__website_hero_artwork_for_My.png?_jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXlIYXNoIjoiNjAzNjhiZmY4NjMwNzg3ZSIsImJ1Y2tldCI6InJ1bndheS10YXNrLWFydGlmYWN0cyIsImV4cCI6MTc5NDU5MDcxOX0.mRawx6LYyWQTWWpW3-vbkxqMGHv0xp5Qc5hrQv30sNY"
+            alt="Estatuas griegas de mármol iluminadas en dorado dentro de un templo antiguo"
+          >
+          <div class="hero-caption" aria-hidden="true">ΜΥΘΟΣ · ΜΟΡΦΗ · ΜΝΗΜΗ</div>
+        </div>
+      </section>
+
+      <div class="greek-rule" aria-hidden="true"></div>
+
+      <section class="auth-section" id="acceso">
+        <div class="auth-intro">
+          <div class="eyebrow">Tu universo comienza aquí</div>
+          <h2>Entra en la leyenda.</h2>
+          <p>Crea una cuenta o inicia sesión para dar vida a tus personajes, construir historias y explorar tu propio universo.</p>
+          <div class="auth-note">HÉROES · MITOS · MUNDOS ETERNOS</div>
+        </div>
+
+        <div class="auth-panel" id="panelAcceso">
+          <section id="formulariosAcceso">
+            <h2>Bienvenido a MYTHRYON</h2>
+            <h3>Crear cuenta</h3>
+            <form id="formRegistro">
+              <input id="email" type="email" placeholder="Correo electrónico" autocomplete="email" required>
+              <input id="password" type="password" placeholder="Contraseña (mínimo 8 caracteres)" minlength="8" autocomplete="new-password" required>
+              <button class="button-gold" type="submit">REGISTRARME</button>
+              <p id="mensajeRegistro" aria-live="polite"></p>
+            </form>
+            <hr>
+            <h3>Iniciar sesión</h3>
+            <form id="formLogin">
+              <input id="loginEmail" type="email" placeholder="Correo electrónico" autocomplete="email" required>
+              <input id="loginPassword" type="password" placeholder="Contraseña" autocomplete="current-password" required>
+              <button class="button-gold" type="submit">ENTRAR</button>
+              <button class="button-gold button-dark" type="button" id="recuperarPassword">¿OLVIDASTE TU CONTRASEÑA?</button>
+              <p id="mensajeLogin" aria-live="polite"></p>
+            </form>
+          </section>
+
+          <section class="hidden" id="pantallaNuevaPassword">
+            <h2>Restablecer contraseña</h2>
+            <p>Escribe tu nueva contraseña para MYTHRYON.</p>
+            <form id="formNuevaPassword">
+              <input id="nuevaPassword" type="password" placeholder="Nueva contraseña" minlength="8" autocomplete="new-password" required>
+              <input id="confirmarPassword" type="password" placeholder="Confirmar contraseña" minlength="8" autocomplete="new-password" required>
+              <button class="button-gold" type="submit">GUARDAR NUEVA CONTRASEÑA</button>
+              <p id="mensajeNuevaPassword" aria-live="polite"></p>
+            </form>
+          </section>
+
+          <section class="private-content hidden" id="espacioPrivado">
+            <h2>Mi espacio MYTHRYON</h2>
+            <p id="mensajeSesion"></p>
+            <h3>EXPLORA TU UNIVERSO</h3>
+            <div class="feature-list">
+              <div class="feature-item">✦ Character Identity Studio</div>
+              <div class="feature-item">✦ Creación de videos</div>
+              <div class="feature-item">✦ Creación de imágenes</div>
+              <div class="feature-item">✦ Música y voces IA</div>
+              <div class="feature-item">✦ Mis proyectos</div>
+            </div>
+            <button class="button-gold button-dark" type="button" id="cerrarSesion">CERRAR SESIÓN</button>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <div class="walker-track" aria-hidden="true">
+      <div class="walker">
+        <div class="walker-helmet"></div>
+        <div class="walker-head"></div>
+        <div class="walker-tunic"></div>
+        <div class="walker-shield"></div>
+        <div class="walker-leg left"></div>
+        <div class="walker-leg right"></div>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <span>HÉROES</span><span>✦</span><span>MITOS</span><span>✦</span><span>MUNDOS</span><span>✦</span><span>MYTHRYON AI © 2026</span>
+    </footer>
+  </div>
+
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+    const supabase = createClient(
+      'https://dwbomqnzbjrlsdrwphmv.supabase.co',
+      'sb_publishable_Y5-_zjuWwlAcY2kSjtsPSw_Z-y_RMCu'
+    );
+
+    const formulariosAcceso = document.getElementById('formulariosAcceso');
+    const pantallaNuevaPassword = document.getElementById('pantallaNuevaPassword');
+    const espacioPrivado = document.getElementById('espacioPrivado');
+    const urlActual = window.location.origin + window.location.pathname;
+    let modoRecuperacion = false;
+
+    function mostrarAcceso() {
+      formulariosAcceso.classList.remove('hidden');
+      pantallaNuevaPassword.classList.add('hidden');
+      espacioPrivado.classList.add('hidden');
+    }
+
+    function mostrarEspacioPrivado(email) {
+      formulariosAcceso.classList.add('hidden');
+      pantallaNuevaPassword.classList.add('hidden');
+      espacioPrivado.classList.remove('hidden');
+      document.getElementById('mensajeSesion').textContent = 'Sesión iniciada: ' + (email || 'usuario');
+    }
+
+    function mostrarRecuperacion(mensaje = '') {
+      modoRecuperacion = true;
+      formulariosAcceso.classList.add('hidden');
+      espacioPrivado.classList.add('hidden');
+      pantallaNuevaPassword.classList.remove('hidden');
+      if (mensaje) document.getElementById('mensajeNuevaPassword').textContent = mensaje;
+    }
+
+    supabase.auth.onAuthStateChange((evento, session) => {
+      if (evento === 'PASSWORD_RECOVERY') {
+        mostrarRecuperacion();
+      } else if (!modoRecuperacion && session?.user) {
+        mostrarEspacioPrivado(session.user.email);
+      } else if (!modoRecuperacion && !session) {
+        mostrarAcceso();
+      }
+    });
+
+    const parametros = new URLSearchParams(window.location.search);
+    const parametrosHash = new URLSearchParams(window.location.hash.slice(1));
+    const errorEnlace = parametros.get('error_description') || parametrosHash.get('error_description');
+
+    if (errorEnlace) {
+      mostrarRecuperacion('El enlace no es válido o venció. Solicita uno nuevo. Detalle: ' + errorEnlace.replaceAll('+', ' '));
+    }
+
+    document.getElementById('formRegistro').addEventListener('submit', async (evento) => {
+      evento.preventDefault();
+      const formulario = evento.currentTarget;
+      const boton = formulario.querySelector('button[type="submit"]');
+      const mensaje = document.getElementById('mensajeRegistro');
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      boton.disabled = true;
+      mensaje.textContent = 'Creando tu cuenta...';
+      try {
+        const { error } = await supabase.auth.signUp({ email, password, options: { emailRedirectTo: urlActual } });
+        if (error) mensaje.textContent = 'Error: ' + error.message;
+        else { mensaje.textContent = '¡Cuenta creada! Revisa tu correo para verificarla.'; formulario.reset(); }
+      } catch (error) {
+        mensaje.textContent = 'Error al crear la cuenta: ' + (error?.message || 'revisa tu conexión e inténtalo de nuevo.');
+        console.error(error);
+      } finally { boton.disabled = false; }
+    });
+
+    document.getElementById('formLogin').addEventListener('submit', async (evento) => {
+      evento.preventDefault();
+      const formulario = evento.currentTarget;
+      const boton = formulario.querySelector('button[type="submit"]');
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+      const mensaje = document.getElementById('mensajeLogin');
+      boton.disabled = true;
+      mensaje.textContent = 'Iniciando sesión...';
+      try {
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) mensaje.textContent = 'Error: ' + error.message;
+        else { mensaje.textContent = ''; mostrarEspacioPrivado(data.user?.email || email); }
+      } catch (error) {
+        mensaje.textContent = 'Error al iniciar sesión: ' + (error?.message || 'revisa tu conexión e inténtalo de nuevo.');
+        console.error(error);
+      } finally { boton.disabled = false; }
+    });
+
+    document.getElementById('recuperarPassword').addEventListener('click', async () => {
+      const email = document.getElementById('loginEmail').value.trim();
+      const mensaje = document.getElementById('mensajeLogin');
+      if (!email) { mensaje.textContent = 'Primero escribe tu correo electrónico.'; return; }
+      mensaje.textContent = 'Enviando correo de recuperación...';
+      try {
+        const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo: urlActual });
+        mensaje.textContent = error ? 'Error: ' + error.message : 'Revisa tu correo para recuperar tu contraseña.';
+      } catch (error) {
+        mensaje.textContent = 'Error al enviar el correo: ' + (error?.message || 'revisa tu conexión e inténtalo de nuevo.');
+        console.error(error);
+      }
+    });
+
+    document.getElementById('formNuevaPassword').addEventListener('submit', async (evento) => {
+      evento.preventDefault();
+      const formulario = evento.currentTarget;
+      const boton = formulario.querySelector('button[type="submit"]');
+      const mensaje = document.getElementById('mensajeNuevaPassword');
+      const password = document.getElementById('nuevaPassword').value;
+      const confirmar = document.getElementById('confirmarPassword').value;
+      if (password !== confirmar) { mensaje.textContent = 'Las contraseñas no coinciden.'; return; }
+      boton.disabled = true;
+      mensaje.textContent = 'Verificando el enlace y actualizando la contraseña...';
+      try {
+        const { data: sesionData, error: errorSesion } = await supabase.auth.getSession();
+        if (errorSesion) throw errorSesion;
+        if (!sesionData.session) {
+          mostrarRecuperacion('No hay una sesión de recuperación activa. El enlace puede haber vencido o ya se utilizó. Solicita un nuevo correo de recuperación.');
+          return;
+        }
+        const { error } = await supabase.auth.updateUser({ password });
+        if (error) throw error;
+        formulario.reset();
+        modoRecuperacion = false;
+        try { await supabase.auth.signOut(); }
+        catch (errorCerrarSesion) { console.warn('La contraseña se actualizó, pero no se pudo cerrar la sesión:', errorCerrarSesion); }
+        mostrarAcceso();
+        document.getElementById('mensajeLogin').textContent = 'Contraseña actualizada. Inicia sesión con tu nueva contraseña.';
+      } catch (error) {
+        console.error('Error al restablecer contraseña:', error);
+        mensaje.textContent = 'No se pudo actualizar la contraseña: ' + (error?.message || String(error) || 'Error desconocido') + '. Si el enlace venció, solicita uno nuevo.';
+      } finally { boton.disabled = false; }
+    });
+
+    document.getElementById('cerrarSesion').addEventListener('click', async () => {
+      const mensaje = document.getElementById('mensajeSesion');
+      try {
+        const { error } = await supabase.auth.signOut();
+        if (error) { mensaje.textContent = 'No se pudo cerrar sesión: ' + error.message; return; }
+        modoRecuperacion = false;
+        mostrarAcceso();
+      } catch (error) {
+        mensaje.textContent = 'Error al cerrar sesión: ' + (error?.message || 'inténtalo nuevamente.');
+      }
+    });
+
+    const { data: { session }, error: errorSesion } = await supabase.auth.getSession();
+    if (errorSesion) console.error('No se pudo leer la sesión:', errorSesion);
+    if (!errorEnlace && session?.user && !modoRecuperacion) mostrarEspacioPrivado(session.user.email);
+  </script>
+</body>
+</html>
