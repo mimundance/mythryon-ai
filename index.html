@@ -96,10 +96,13 @@ color: #fff;
 
 <h3>Iniciar sesión</h3>
 <form id="formLogin">
-<input id="loginEmail" type="email" placeholder="Correo electrónico" required>
-<input id="loginPassword" type="password" placeholder="Contraseña" required>
-<button type="submit">Entrar</button>
-<p id="mensajeLogin"></p>
+  <input id="loginEmail" type="email" placeholder="Correo electrónico" required>
+  <input id="loginPassword" type="password" placeholder="Contraseña" required>
+  <button type="submit">Entrar</button>
+  <button type="button" id="recuperarPassword">
+    ¿Olvidaste tu contraseña?
+  </button>
+  <p id="mensajeLogin"></p>
 </form>
 </section>
 
@@ -169,7 +172,30 @@ const { error } = await supabase.auth.signInWithPassword({
 email,
 password
 });
-  
+
+  const recuperar = document.getElementById('recuperarPassword');
+
+recuperar.addEventListener('click', async () => {
+  const email = document.getElementById('loginEmail').value.trim();
+  const mensaje = document.getElementById('mensajeLogin');
+
+  if (!email) {
+    mensaje.textContent = 'Primero escribe tu correo electrónico.';
+    return;
+  }
+
+  mensaje.textContent = 'Enviando correo de recuperación...';
+
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: 'https://mimundance.github.io/mythryon-ai/'
+  });
+
+  if (error) {
+    mensaje.textContent = 'Error: ' + error.message;
+  } else {
+    mensaje.textContent = 'Revisa tu correo para recuperar tu contraseña.';
+  }
+});
 
 if (error) {
 mensaje.textContent = 'Error: ' + error.message;
