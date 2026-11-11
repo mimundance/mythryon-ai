@@ -1,294 +1,404 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MYTHRYON AI</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MYTHRYON AI</title>
 
-<style>
-* { box-sizing: border-box; }
+  <style>
+    * { box-sizing: border-box; }
 
-body {
-background: #080808;
-color: #f5d58a;
-font-family: Arial, sans-serif;
-text-align: center;
-padding: 20px;
-margin: 0;
-}
+    body {
+      background: #080808;
+      color: #f5d58a;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+      margin: 0;
+    }
 
-main {
-max-width: 600px;
-margin: 20px auto;
-}
+    main {
+      max-width: 600px;
+      margin: 20px auto;
+    }
 
-.panel {
-border: 2px solid #c9a34a;
-border-radius: 16px;
-padding: 24px;
-margin: 18px 0;
-background: #111;
-}
+    .panel {
+      border: 2px solid #c9a34a;
+      border-radius: 16px;
+      padding: 24px;
+      margin: 18px 0;
+      background: #111;
+    }
 
-h1 { font-size: 36px; letter-spacing: 5px; }
-h2, h3 { color: #e3bd66; }
-p { color: #fff; line-height: 1.6; }
+    h1 { font-size: 36px; letter-spacing: 5px; }
+    h2, h3 { color: #e3bd66; }
+    p { color: #fff; line-height: 1.6; }
 
-input {
-display: block;
-width: 100%;
-padding: 14px;
-margin: 12px 0;
-border-radius: 8px;
-border: 1px solid #c9a34a;
-font-size: 16px;
-}
+    input {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      margin: 12px 0;
+      border-radius: 8px;
+      border: 1px solid #c9a34a;
+      font-size: 16px;
+    }
 
-button {
-width: 100%;
-padding: 14px;
-margin: 8px 0;
-border-radius: 8px;
-border: 1px solid #e3bd66;
-background: #c9a34a;
-color: #080808;
-font-size: 17px;
-font-weight: bold;
-cursor: pointer;
-}
+    button {
+      width: 100%;
+      padding: 14px;
+      margin: 8px 0;
+      border-radius: 8px;
+      border: 1px solid #e3bd66;
+      background: #c9a34a;
+      color: #080808;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+    }
 
-.secondary {
-background: #171717;
-color: #f5d58a;
-}
+    button:disabled {
+      opacity: .65;
+      cursor: wait;
+    }
 
-.hidden { display: none; }
+    .secondary {
+      background: #171717;
+      color: #f5d58a;
+    }
 
-#mensajeRegistro, #mensajeLogin, #mensajeSesion {
-overflow-wrap: anywhere;
-color: #fff;
-}
-</style>
+    .hidden { display: none !important; }
+
+    #mensajeRegistro,
+    #mensajeLogin,
+    #mensajeSesion,
+    #mensajeNuevaPassword {
+      overflow-wrap: anywhere;
+      color: #fff;
+    }
+
+    hr {
+      border: 0;
+      border-top: 1px solid #444;
+      margin: 24px 0;
+    }
+  </style>
 </head>
 
 <body>
-<main>
+  <main>
+    <section class="panel">
+      <h1>MYTHRYON</h1>
+      <p>AI CHARACTER IDENTITY STUDIO</p>
+      <p>Create Beyond Imagination</p>
+      <p>Da vida a tus personajes. Crea mundos. Construye historias.</p>
+    </section>
 
-<section class="panel">
-<h1>MYTHRYON</h1>
-<p>AI CHARACTER IDENTITY STUDIO</p>
-<p>Create Beyond Imagination</p>
-<p>Da vida a tus personajes. Crea mundos. Construye historias.</p>
-</section>
+    <section class="panel" id="acceso">
+      <h2>Bienvenido a MYTHRYON</h2>
 
-<section class="panel" id="acceso">
-<h2>Bienvenido a MYTHRYON</h2>
+      <h3>Crear cuenta</h3>
+      <form id="formRegistro">
+        <input
+          id="email"
+          type="email"
+          placeholder="Correo electrónico"
+          autocomplete="email"
+          required
+        >
+        <input
+          id="password"
+          type="password"
+          placeholder="Contraseña (mínimo 8 caracteres)"
+          minlength="8"
+          autocomplete="new-password"
+          required
+        >
+        <button type="submit">Registrarme</button>
+        <p id="mensajeRegistro" aria-live="polite"></p>
+      </form>
 
-<h3>Crear cuenta</h3>
-<form id="formRegistro">
-<input id="email" type="email" placeholder="Correo electrónico" required>
-<input id="password" type="password" placeholder="Contraseña (mínimo 8 caracteres)" minlength="8" required>
-<button type="submit">Registrarme</button>
-<p id="mensajeRegistro"></p>
-</form>
+      <hr>
 
-<hr>
-<h3>Iniciar sesión</h3>
-<form id="formLogin">
-  <input id="loginEmail" type="email" placeholder="Correo electrónico" required>
-  <input id="loginPassword" type="password" placeholder="Contraseña" required>
-  <button type="submit">Entrar</button>
-  <button type="button" id="recuperarPassword">
-    ¿Olvidaste tu contraseña?
-  </button>
-  <p id="mensajeLogin"></p>
-</form>
-</section>
+      <h3>Iniciar sesión</h3>
+      <form id="formLogin">
+        <input
+          id="loginEmail"
+          type="email"
+          placeholder="Correo electrónico"
+          autocomplete="email"
+          required
+        >
+        <input
+          id="loginPassword"
+          type="password"
+          placeholder="Contraseña"
+          autocomplete="current-password"
+          required
+        >
+        <button type="submit">Entrar</button>
+        <button type="button" class="secondary" id="recuperarPassword">
+          ¿Olvidaste tu contraseña?
+        </button>
+        <p id="mensajeLogin" aria-live="polite"></p>
+      </form>
+    </section>
 
+    <section class="panel hidden" id="espacioPrivado">
+      <h2>Mi espacio MYTHRYON</h2>
+      <p id="mensajeSesion"></p>
+      <h3>EXPLORA TU UNIVERSO</h3>
+      <p>✨ Character Identity Studio</p>
+      <p>🎬 Creación de videos</p>
+      <p>🖼️ Creación de imágenes</p>
+      <p>🎵 Música y voces IA</p>
+      <p>📁 Mis proyectos</p>
+      <button class="secondary" id="cerrarSesion">Cerrar sesión</button>
+    </section>
 
-<section class="panel hidden" id="espacioPrivado">
-<h2>Mi espacio MYTHRYON</h2>
-<p id="mensajeSesion"></p>
-<h3>EXPLORA TU UNIVERSO</h3>
-<p>✨ Character Identity Studio</p>
-<p>🎬 Creación de videos</p>
-<p>🖼️ Creación de imágenes</p>
-<p>🎵 Música y voces IA</p>
-<p>📁 Mis proyectos</p>
-<button class="secondary" id="cerrarSesion">Cerrar sesión</button>
-</section>
+    <section class="panel hidden" id="pantallaNuevaPassword">
+      <h2>Restablecer contraseña</h2>
+      <p>Escribe tu nueva contraseña para MYTHRYON.</p>
 
-<p>MYTHRYON AI © 2026</p>
+      <form id="formNuevaPassword">
+        <input
+          id="nuevaPassword"
+          type="password"
+          placeholder="Nueva contraseña"
+          minlength="8"
+          autocomplete="new-password"
+          required
+        >
+        <input
+          id="confirmarPassword"
+          type="password"
+          placeholder="Confirmar contraseña"
+          minlength="8"
+          autocomplete="new-password"
+          required
+        >
+        <button type="submit">Guardar nueva contraseña</button>
+        <p id="mensajeNuevaPassword" aria-live="polite"></p>
+      </form>
+    </section>
 
-</main> 
+    <p>MYTHRYON AI © 2026</p>
+  </main>
 
-<script type="module"
-<section id="pantallaNuevaPassword" style="display:none;">
-  <h2>Restablecer contraseña</h2>
-  <p>Escribe tu nueva contraseña para MYTHRYON.</p>
+  <script type="module">
+    import { createClient } from
+      'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
-  <form id="formNuevaPassword">
-    <input
-      id="nuevaPassword"
-      type="password"
-      placeholder="Nueva contraseña"
-      minlength="8"
-      required
-    >
+    const supabase = createClient(
+      'https://dwbomqnzbjrlsdrwphmv.supabase.co',
+      'sb_publishable_Y5-_zjuWwlAcY2kSjtsPSw_Z-y_RMCu'
+    );
 
-    <input
-      id="confirmarPassword"
-      type="password"
-      placeholder="Confirmar contraseña"
-      minlength="8"
-      required
-    >
+    const acceso = document.getElementById('acceso');
+    const espacioPrivado = document.getElementById('espacioPrivado');
+    const pantallaNuevaPassword =
+      document.getElementById('pantallaNuevaPassword');
 
-    <button type="submit">Guardar nueva contraseña</button>
-    <p id="mensajeNuevaPassword"></p>
-  </form>
-</section>
-  
-<script>
-import { createClient } from
-'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+    const urlActual =
+      window.location.origin + window.location.pathname;
 
-const supabase = createClient(
-'https://dwbomqnzbjrlsdrwphmv.supabase.co',
-'sb_publishable_Y5-_zjuWwlAcY2kSjtsPSw_Z-y_RMCu'
-);
+    function mostrarEspacioPrivado(email) {
+      acceso.classList.add('hidden');
+      espacioPrivado.classList.remove('hidden');
 
-const registro = document.getElementById('formRegistro');
-const login = document.getElementById('formLogin');
+      document.getElementById('mensajeSesion').textContent =
+        'Sesión iniciada: ' + (email || 'usuario');
+    }
 
-registro.addEventListener('submit', async (e) => {
-e.preventDefault();
+    function mostrarAcceso() {
+      espacioPrivado.classList.add('hidden');
+      acceso.classList.remove('hidden');
+    }
 
-const email = document.getElementById('email').value.trim();
-const password = document.getElementById('password').value;
-const mensaje = document.getElementById('mensajeRegistro');
+    document
+      .getElementById('formRegistro')
+      .addEventListener('submit', async (e) => {
+        e.preventDefault();
 
-mensaje.textContent = 'Creando tu cuenta...';
+        const formulario = e.currentTarget;
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value;
+        const mensaje = document.getElementById('mensajeRegistro');
+        const boton = formulario.querySelector('button[type="submit"]');
 
-const { error } = await supabase.auth.signUp({
-email,
-password,
-options: {
-emailRedirectTo: 'https://mimundance.github.io/mythryon-ai/'
-}
-});
+        boton.disabled = true;
+        mensaje.textContent = 'Creando tu cuenta...';
 
-if (error) {
-mensaje.textContent = 'Error: ' + error.message;
-} else {
-mensaje.textContent =
-'¡Cuenta creada! Revisa tu correo para verificarla.';
-}
-});
+        try {
+          const { error } = await supabase.auth.signUp({
+            email,
+            password,
+            options: {
+              emailRedirectTo: urlActual
+            }
+          });
 
-login.addEventListener('submit', async (e) => {
-e.preventDefault();
+          if (error) {
+            mensaje.textContent = 'Error: ' + error.message;
+          } else {
+            mensaje.textContent =
+              '¡Cuenta creada! Revisa tu correo para verificarla.';
+            formulario.reset();
+          }
+        } catch (error) {
+          mensaje.textContent =
+            'No se pudo crear la cuenta. Revisa tu conexión e inténtalo de nuevo.';
+          console.error(error);
+        } finally {
+          boton.disabled = false;
+        }
+      });
 
-const email = document.getElementById('loginEmail').value.trim();
-const password = document.getElementById('loginPassword').value;
-const mensaje = document.getElementById('mensajeLogin');
+    document
+      .getElementById('formLogin')
+      .addEventListener('submit', async (e) => {
+        e.preventDefault();
 
-mensaje.textContent = 'Iniciando sesión...';
+        const email = document.getElementById('loginEmail').value.trim();
+        const password = document.getElementById('loginPassword').value;
+        const mensaje = document.getElementById('mensajeLogin');
 
-const { error } = await supabase.auth.signInWithPassword({
-email,
-password
-});
+        mensaje.textContent = 'Iniciando sesión...';
 
-  const recuperar = document.getElementById('recuperarPassword');
+        try {
+          const { data, error } =
+            await supabase.auth.signInWithPassword({
+              email,
+              password
+            });
 
-recuperar.addEventListener('click', async () => {
-  const email = document.getElementById('loginEmail').value.trim();
-  const mensaje = document.getElementById('mensajeLogin');
+          if (error) {
+            mensaje.textContent = 'Error: ' + error.message;
+            return;
+          }
 
-  if (!email) {
-    mensaje.textContent = 'Primero escribe tu correo electrónico.';
-    return;
-  }
+          mensaje.textContent = '';
+          mostrarEspacioPrivado(data.user?.email || email);
+        } catch (error) {
+          mensaje.textContent =
+            'No se pudo iniciar sesión. Revisa tu conexión e inténtalo de nuevo.';
+          console.error(error);
+        }
+      });
 
-  mensaje.textContent = 'Enviando correo de recuperación...';
+    document
+      .getElementById('recuperarPassword')
+      .addEventListener('click', async () => {
+        const email = document.getElementById('loginEmail').value.trim();
+        const mensaje = document.getElementById('mensajeLogin');
 
-  const { error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: 'https://mimundance.github.io/mythryon-ai/'
-  });
+        if (!email) {
+          mensaje.textContent =
+            'Primero escribe tu correo electrónico.';
+          return;
+        }
 
-  const pantallaNueva = document.getElementById('pantallaNuevaPassword');
+        mensaje.textContent = 'Enviando correo de recuperación...';
 
-supabase.auth.onAuthStateChange((event, session) => {
-  if (event === 'PASSWORD_RECOVERY' && session) {
-    pantallaNueva.style.display = 'block';
-  }
-});
+        try {
+          const { error } =
+            await supabase.auth.resetPasswordForEmail(email, {
+              redirectTo: urlActual
+            });
 
-document.getElementById('formNuevaPassword')
-.addEventListener('submit', async (e) => {
-  e.preventDefault();
+          mensaje.textContent = error
+            ? 'Error: ' + error.message
+            : 'Revisa tu correo para recuperar tu contraseña.';
+        } catch (error) {
+          mensaje.textContent =
+            'No se pudo enviar el correo. Revisa tu conexión e inténtalo de nuevo.';
+          console.error(error);
+        }
+      });
 
-  const password = document.getElementById('nuevaPassword').value;
-  const confirmar = document.getElementById('confirmarPassword').value;
-  const mensaje = document.getElementById('mensajeNuevaPassword');
+    document
+      .getElementById('formNuevaPassword')
+      .addEventListener('submit', async (e) => {
+        e.preventDefault();
 
-  if (password !== confirmar) {
-    mensaje.textContent = 'Las contraseñas no coinciden.';
-    return;
-  }
+        const password =
+          document.getElementById('nuevaPassword').value;
+        const confirmar =
+          document.getElementById('confirmarPassword').value;
+        const mensaje =
+          document.getElementById('mensajeNuevaPassword');
 
-  mensaje.textContent = 'Actualizando contraseña...';
+        if (password !== confirmar) {
+          mensaje.textContent = 'Las contraseñas no coinciden.';
+          return;
+        }
 
-  const { error } = await supabase.auth.updateUser({
-    password: password
-  });
+        mensaje.textContent = 'Actualizando contraseña...';
 
-  if (error) {
-    mensaje.textContent = 'Error: ' + error.message;
-  } else {
-    mensaje.textContent = '¡Contraseña actualizada correctamente!';
-  }
-});
+        try {
+          const { error } = await supabase.auth.updateUser({ password });
 
-  if (error) {
-    mensaje.textContent = 'Error: ' + error.message;
-  } else {
-    mensaje.textContent = 'Revisa tu correo para recuperar tu contraseña.';
-  }
-});
+          if (error) {
+            mensaje.textContent = 'Error: ' + error.message;
+            return;
+          }
 
-if (error) {
-mensaje.textContent = 'Error: ' + error.message;
-} else {
-mensaje.textContent = '';
-mostrarEspacioPrivado();
-}
-});
+          mensaje.textContent =
+            '¡Contraseña actualizada correctamente!';
+          e.currentTarget.reset();
+        } catch (error) {
+          mensaje.textContent =
+            'No se pudo actualizar la contraseña. Inténtalo de nuevo.';
+          console.error(error);
+        }
+      });
 
-async function mostrarEspacioPrivado() {
-const { data } = await supabase.auth.getUser();
+    document
+      .getElementById('cerrarSesion')
+      .addEventListener('click', async () => {
+        const { error } = await supabase.auth.signOut();
 
-if (data.user) {
-document.getElementById('acceso').classList.add('hidden');
-document.getElementById('espacioPrivado').classList.remove('hidden');
-document.getElementById('mensajeSesion').textContent =
-'Sesión iniciada: ' + data.user.email;
-}
-}
+        if (error) {
+          document.getElementById('mensajeSesion').textContent =
+            'No se pudo cerrar sesión: ' + error.message;
+          return;
+        }
 
-document.getElementById('cerrarSesion').addEventListener('click', async () => {
-await supabase.auth.signOut();
-document.getElementById('espacioPrivado').classList.add('hidden');
-document.getElementById('acceso').classList.remove('hidden');
-});
+        mostrarAcceso();
+      });
 
-const { data: { session } } = await supabase.auth.getSession();
+    supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'PASSWORD_RECOVERY') {
+        pantallaNuevaPassword.classList.remove('hidden');
+        acceso.classList.add('hidden');
+        espacioPrivado.classList.add('hidden');
+      } else if (
+        session?.user &&
+        !pantallaNuevaPassword.classList.contains('hidden')
+      ) {
+        // Mantiene activa la sesión mientras se restablece la contraseña.
+      } else if (session?.user) {
+        mostrarEspacioPrivado(session.user.email);
+      } else {
+        mostrarAcceso();
+      }
+    });
 
-if (session) {
-mostrarEspacioPrivado();
-}
+    const {
+      data: { session },
+      error: sessionError
+    } = await supabase.auth.getSession();
 
-<script> 
+    if (sessionError) {
+      console.error(sessionError);
+    }
+
+    if (session?.user) {
+      mostrarEspacioPrivado(session.user.email);
+    }
+  </script>
 </body>
 </html>
+
+    
+11:42 a.m.
